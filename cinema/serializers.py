@@ -17,7 +17,7 @@ class MovieSerializer(serializers.Serializer):
         many=True,
         queryset=Genre.objects.all(),
     )
-    duration = serializers.IntegerField(validators=[MinValueValidator(1)])
+    duration = serializers.IntegerField(min_value=1)
 
     def create(self, validated_data):
         actors = validated_data.pop("actors", None)
@@ -76,8 +76,8 @@ class GenreSerializer(serializers.Serializer):
 class CinemaHallSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(max_length=255)
-    rows = serializers.IntegerField(validators=[MinValueValidator(1)])
-    seats_in_row = serializers.IntegerField(validators=[MinValueValidator(1)])
+    rows = serializers.IntegerField(min_value=1)
+    seats_in_row = serializers.IntegerField(min_value=1)
 
     def create(self, validated_data):
         return CinemaHall.objects.create(**validated_data)
